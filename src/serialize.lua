@@ -66,6 +66,7 @@ end
 ---@param pos number 位置
 ---@return number, any, number 类型, 数据, 位置
 local function _unpack(data, pos)
+    local v
     local tp = unpack('<B', data, pos)
     pos = pos + 1
     if tp >= 10 and tp < 20 then
