@@ -19,7 +19,7 @@ local data1 = M.serialize { -- 写入多条数据
 local data2 = M.serialize('Hello, World!')
 local data3 = M.serialize(math.pi)
 
-local data = table_concat { data1, data2, data3 }
+local data = table.concat { data1, data2, data3 }
 
 local res, pos = M.deserialize(data)
 print(res[false])
