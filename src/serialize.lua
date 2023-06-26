@@ -66,31 +66,26 @@ end
 ---@param pos number 位置
 ---@return number, any, number 类型, 数据, 位置
 local function _unpack(data, pos)
-    tp, a = unpack('<B', data, pos)
-    pos = pos + 1
+    local v, tp
+    tp, pos = unpack('<B', data, pos)
     if tp >= 10 and tp < 20 then
         local b = tp - 10
-        v = unpack('<s' .. b, data, pos)
-        pos = pos + b + #v
+        v, pos = unpack('<s' .. b, data, pos)
     elseif tp == 20 then
-        v = unpack('<n', data, pos)
-        pos = pos + 8
+        v, pos = unpack('<n', data, pos)
     elseif tp >= 210 and tp < 220 then
         local b = tp - 210
-        v = unpack('<I' .. b, data, pos)
-        pos = pos + b
+        v, pos = unpack('<I' .. b, data, pos)
     elseif tp >= 220 and tp < 230 then
         local b = tp - 220
-        v = -unpack('<I' .. b, data, pos)
-        pos = pos + b
+        v, pos = -unpack('<I' .. b, data, pos)
     elseif tp >= 30 and tp < 40 then
         local b = tp - 30
         v = b == 1
     elseif tp >= 40 and tp < 50 then
         local b = tp - 40
-        local s = unpack('<s' .. b, data, pos)
-        v = load(s)
-        pos = pos + b + #s
+        v, pos  = unpack('<s' .. b, data, pos)
+        v       = load(s)
     end
     return tp, v, pos
 end
